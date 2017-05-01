@@ -4,6 +4,8 @@
 
 # TODO
 # - Proper mult-editing
+# - Visible/editable Part #
+# - Connect Materials/banding
 # - Visual feedback (texture)
 # - Visual feedback (banding)
 # - Cleanup choice between ComponentInstance / Group (only use ComponentInstance from now on)
