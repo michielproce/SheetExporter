@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <script type="text/javascript" src="js/lib/jquery-2.2.3.min.js" ></script>
+    <script type="text/javascript" src="js/script.js" ></script>
+</head>
+<body>
+
+<div id="no-selection" style="display: none">
+    Select group(s) / component instance(s)
+</div>
+
+<div id="selection" style="display: none">
+<!--<div id="selection">-->
+
+<form id="form">
+    <input type="hidden" id="error"/>
+
+    <fieldset>
+        <legend>Export</legend>
+        <button type="button" id="export_to_clipboard">Copy to clipboard</button>
+    </fieldset>
+
+    <fieldset>
+        <legend>Information</legend>
+        <input type="hidden" id="length"/>
+        <input type="hidden" id="width"/>
+        <input type="hidden" id="thick"/>
+
+        <table>
+            <tr>
+                <td>Selected</td>
+                <td><span id="item-count">0</span> items</td>
+            </tr>
+
+            <tr class="single-item">
+                <td>Sub-Assembly</td>
+                <td id="sub-assembly"></td>
+            </tr>
+
+            <tr class="single-item">
+                <td>Description</td>
+                <td id="description"></td>
+            </tr>
+
+            <tr id="size-text" class="single-item">
+                <td>Size (Length x Width x Thick)</td>
+                <td class="no-rotate"><span class="length-text"></span>x<span class="width-text"></span>x<span class="thick-text"></span></td>
+                <td class="rotate"><span class="width-text"></span>x<span class="length-text"></span>x<span
+                        class="thick-text"></span></td>
+            </tr>
+            <tr>
+                <td>Weight (kg, MDF)</td>
+                <td id="weight"></td>
+            </tr>
+            <tr>
+                <td>Surface (m²)</td>
+                <td id="surface"></td>
+            </tr>
+        </table>
+    </fieldset>
+
+
+    <fieldset>
+        <legend>Material</legend>
+
+        <table>
+            <tr>
+                <td><label for="skip-checkbox">Skip</label></td>
+                <td>
+                    <input type="hidden" name="skip" id="skip"/>
+                    <input type="checkbox" name="skip-checkbox" id="skip-checkbox"/>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td><label for="info">Info</label></td>
+                <td><input type="text" name="info" id="info"/></td>
+            </tr>
+            <tr>
+                <td><label for="rotate-checkbox">Rotate 90°</label></td>
+                <td>
+                    <input type="hidden" name="rotate" id="rotate"/>
+                    <input type="checkbox" name="rotate-checkbox" id="rotate-checkbox"/>
+                </td>
+
+            </tr>
+            <tr>
+                <td>Material</td>
+                <td>
+                    <div id="material-wrapper">
+                        <input type="hidden" name="material" id="material">
+                        <div><label><input type="radio" name="material-radio" value="" checked /> No Material</label></div>
+                        <div><label class="material-primary-label"><input type="radio" name="material-radio" value="Primary" /> Primary Material</label></div>
+                        <div><label class="material-secondary-label"><input type="radio" name="material-radio" value="Secondary" /> Secondary Material</label></div>
+                        <div>
+                            <label class="material-other-label"><input type="radio" name="material-radio" value="other" /> Other:</label>
+                            <select name="material-other" class="material-other" id="material-other"></select>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+
+
+    <fieldset>
+        <legend>Banding</legend>
+        <div>
+            <div id="sheet">
+                <div class="band back"><input type="hidden" name="band-back" id="band-back" /></div>
+                <div class="band right"><input type="hidden" name="band-right" id="band-right" /></div>
+                <div class="band front"><input type="hidden" name="band-front" id="band-front" /></div>
+                <div class="band left"><input type="hidden" name="band-left" id="band-left" /></div>
+            </div>
+        </div>
+    </fieldset>
+</form>
+</div>
+
+</body>
+</html>

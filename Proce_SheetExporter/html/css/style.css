@@ -1,0 +1,113 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f0f0;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 9pt;
+    padding: 5px;
+}
+
+fieldset {
+    margin: 5px 0;
+}
+
+legend {
+    font-weight: bold;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid #c0c0c0;
+}
+
+td, th {
+    padding: 5px;
+}
+
+input[type="text"], select {
+    display: block;
+    width: 100%;
+    font-weight: bold;
+}
+
+::-ms-clear { display: none; }
+
+/*-----*/
+
+
+#material-wrapper label {
+    /*font-weight: bold;*/
+}
+
+.material-primary-label {
+    color: #3caa3c;
+}
+
+.material-secondary-label {
+    color: #3399ff;
+}
+
+.material-other-label {
+    color: #b40033;
+}
+
+
+#sheet {
+    /*width: 200px;*/
+    width: 100%;
+    height: 50vw;
+    max-height:  250px;
+    position: relative;
+
+    background-image: url("../img/stripes-horizontal.png");
+}
+
+#sheet.rotate {
+    background-image: url("../img/stripes-vertical.png");
+}
+
+.band {
+    position: absolute;
+    background-color: #c0c0c0;
+    cursor: pointer
+}
+
+.band.active {
+    background-color: #000000;
+    z-index: 1;
+}
+
+.band.back {
+    width: 100%;
+    height: 20px;
+    top: 0;
+    left: 0;
+}
+
+.band.right {
+    width: 20px;
+    height: 100%;
+    top: 0;
+    right: 0;
+}
+
+.band.front {
+    width: 100%;
+    height: 20px;
+    bottom: 0;
+    left: 0;
+}
+
+.band.left {
+    width: 20px;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
