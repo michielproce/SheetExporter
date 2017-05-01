@@ -151,6 +151,34 @@ module Proce_SheetExporter
       entities = Functions::find_entities(Sketchup.active_model.selection)
       entities.each do |e|
         Functions::entity_set_attribute(e, attribute, value)
+
+        if attribute.start_with?("band-")
+          faces = e.definition.entities.select { |e| e.is_a? Sketchup::Face }.sort_by { |face| face.area }
+          if faces.length == 6
+
+            face_color = nil
+            if value == "true"
+              face_color = "Red"
+            end
+
+            if attribute == "band-back"
+              faces[2].material = face_color
+            end
+
+            if attribute == "band-right"
+              faces[0].material = face_color
+            end
+
+            if attribute == "band-front"
+              faces[3].material = face_color
+            end
+
+            if attribute == "band-left"
+              faces[1].material = face_color
+            end
+
+          end
+        end
       end
     end
 
