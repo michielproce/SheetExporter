@@ -11,16 +11,18 @@ module Proce_SheetExporter
     def self.entity_sizes(entity)
       bounds = local_bounds(entity)
 
-      tr=entity.transformation.to_a
-      xscale = Math::sqrt(tr[0]*tr[0]+tr[1]*tr[1]+tr[2]*tr[2])
-      yscale = Math::sqrt(tr[4]*tr[4]+tr[5]*tr[5]+tr[6]*tr[6])
-      zscale = Math::sqrt(tr[8]*tr[8]+tr[9]*tr[9]+tr[10]*tr[10])
+      # tr=entity.transformation.to_a
+      # xscale = Math::sqrt(tr[0]*tr[0]+tr[1]*tr[1]+tr[2]*tr[2])
+      # yscale = Math::sqrt(tr[4]*tr[4]+tr[5]*tr[5]+tr[6]*tr[6])
+      # zscale = Math::sqrt(tr[8]*tr[8]+tr[9]*tr[9]+tr[10]*tr[10])
+      #
+      # width = (bounds.width * xscale).to_l
+      # depth = (bounds.depth * yscale).to_l
+      # height = (bounds.height * zscale).to_l
+      #
+      # [width, depth, height].sort.reverse
 
-      width = (bounds.width * xscale).to_l
-      depth = (bounds.depth * yscale).to_l
-      height = (bounds.height * zscale).to_l
-
-      [width, depth, height].sort.reverse
+      [bounds.width, bounds.depth, bounds.height].sort.reverse
     end
 
     def self.entity_sub_assembly(entity)
@@ -82,8 +84,8 @@ module Proce_SheetExporter
       if entity.is_a? Sketchup::Group
         bounds = entity.local_bounds
       elsif entity.is_a? Sketchup::ComponentInstance
-        # bounds = entity.bounds;
-        bounds = entity.definition.bounds
+        bounds = entity.bounds;
+        # bounds = entity.definition.bounds
       end
 
       bounds
