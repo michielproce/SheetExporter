@@ -3,6 +3,7 @@
 # height = blue = z
 
 # TODO
+# - Fix scaling issue with 'apply rotation'
 # - Proper mult-editing
 # - Visible/editable Part #
 # - Connect Materials/banding
