@@ -19,12 +19,12 @@ module Proce_SheetExporter
       entities.each do |entity1|
         entities.each do |entity2|
           if entity1 != entity2
-              intersect_bounds = entity1.bounds.intersect(entity2.bounds)
-              if (!intersect_bounds.empty?)
-                entity1.visible=true
-                entity2.visible=true
-                collisions += 1
-              end
+            intersect_bounds = entity1.bounds.intersect(entity2.bounds)
+            if intersect_bounds.width != 0 && intersect_bounds.depth != 0 && intersect_bounds.height != 0
+              entity1.visible=true
+              entity2.visible=true
+              collisions += 1
+            end
           end
         end
       end
