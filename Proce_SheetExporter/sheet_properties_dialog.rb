@@ -152,6 +152,7 @@ module Proce_SheetExporter
       entities.each do |e|
         Functions::entity_set_attribute(e, attribute, value)
 
+=begin
         if attribute.start_with?("band-")
           faces = e.definition.entities.select { |e| e.is_a? Sketchup::Face }.sort_by { |face| face.area }
           if faces.length == 6
@@ -179,6 +180,7 @@ module Proce_SheetExporter
 
           end
         end
+=end
       end
     end
 
