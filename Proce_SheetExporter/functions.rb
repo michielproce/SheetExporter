@@ -139,6 +139,16 @@ module Proce_SheetExporter
       children
     end
 
+    def self.calc_weight(entity)
+      sizes = Functions::entity_sizes(entity)
+      sizes[0].to_mm * sizes[1].to_mm * sizes[2].to_mm / 1000000000 * 750
+    end
+
+    def self.calc_surface(entity)
+      sizes = Functions::entity_sizes(entity)
+      sizes[0].to_mm * sizes[1].to_mm / 1000000
+    end
+
 
     def self.import_materials
       materials = []
