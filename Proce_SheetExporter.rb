@@ -9,7 +9,6 @@
 # - Connect Materials/banding
 # - Visual feedback (texture)
 # - Visual feedback (banding)
-# - Cleanup choice between ComponentInstance / Group (only use ComponentInstance from now on)
 
 require 'sketchup.rb'
 require 'extensions.rb'
