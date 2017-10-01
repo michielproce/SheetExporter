@@ -21,7 +21,8 @@ module Proce_SheetExporter
 
   sheet_properties_dialog = SheetPropertiesDialog.new
 
-  #show_ruby_panel()
+  show_ruby_panel()
+  sheet_properties_dialog.show
 
   show_sheet_properties_command = UI::Command.new("Sheet properties") {
     sheet_properties_dialog.show
@@ -48,7 +49,7 @@ module Proce_SheetExporter
 
   toolbar = UI::Toolbar.new "Sheet exporter"
   toolbar = toolbar.add_item show_sheet_properties_command
-  toolbar = toolbar.add_item check_collision_command
+  # toolbar = toolbar.add_item check_collision_command
   toolbar.show
 
 
