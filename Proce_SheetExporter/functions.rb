@@ -9,19 +9,7 @@ module Proce_SheetExporter
 
 
     def self.entity_sizes(entity)
-      bounds = local_bounds(entity)
-
-      # tr=entity.transformation.to_a
-      # xscale = Math::sqrt(tr[0]*tr[0]+tr[1]*tr[1]+tr[2]*tr[2])
-      # yscale = Math::sqrt(tr[4]*tr[4]+tr[5]*tr[5]+tr[6]*tr[6])
-      # zscale = Math::sqrt(tr[8]*tr[8]+tr[9]*tr[9]+tr[10]*tr[10])
-      #
-      # width = (bounds.width * xscale).to_l
-      # depth = (bounds.depth * yscale).to_l
-      # height = (bounds.height * zscale).to_l
-      #
-      # [width, depth, height].sort.reverse
-
+      bounds = entity.bounds
       [bounds.width, bounds.depth, bounds.height].sort.reverse
     end
 
@@ -32,10 +20,6 @@ module Proce_SheetExporter
     def self.entity_description(entity)
       description = ""
 
-      if entity.is_a? Sketchup::Group
-        description = entity.name
-      end
-
       if entity.is_a? Sketchup::ComponentInstance
         description = entity.definition.name
       end
@@ -44,17 +28,11 @@ module Proce_SheetExporter
     end
 
     def self.entity_get_attribute(entity, name, default = nil)
-      if entity.is_a? Sketchup::ComponentInstance
-        entity = entity.definition;
-      end
-      entity.get_attribute("Proce_SheetExporter", name, default)
+      entity.definition.get_attribute("Proce_SheetExporter", name, default)
     end
 
     def self.entity_set_attribute(entity, name, value)
-      if entity.is_a? Sketchup::ComponentInstance
-        entity = entity.definition;
-      end
-      entity.set_attribute("Proce_SheetExporter", name, value)
+      entity.definition.set_attribute("Proce_SheetExporter", name, value)
     end
 
     def self.find_entities(selection)
@@ -79,26 +57,12 @@ module Proce_SheetExporter
       entities
     end
 
-    def self.local_bounds(entity)
-      bounds = nil
-      if entity.is_a? Sketchup::Group
-        bounds = entity.local_bounds
-      elsif entity.is_a? Sketchup::ComponentInstance
-        bounds = entity.bounds;
-        # bounds = entity.definition.bounds
-      end
-
-      bounds
-    end
-
 
     def self.find_parent(child_entity)
       model = Sketchup.active_model
       entities = model.entities.select { |e| e.is_a? Sketchup::Group or e.is_a? Sketchup::ComponentInstance }
 
       to_visit_entities = []
-
-
 
       entities.each do |e|
         node = OpenStruct.new
