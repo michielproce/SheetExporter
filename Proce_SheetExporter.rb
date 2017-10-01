@@ -21,8 +21,8 @@ module Proce_SheetExporter
 
   sheet_properties_dialog = SheetPropertiesDialog.new
 
-  show_ruby_panel()
-  sheet_properties_dialog.show
+  # show_ruby_panel()
+  # sheet_properties_dialog.show
 
   show_sheet_properties_command = UI::Command.new("Sheet properties") {
     sheet_properties_dialog.show
