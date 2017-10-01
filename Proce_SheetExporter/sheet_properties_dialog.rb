@@ -56,39 +56,44 @@ module Proce_SheetExporter
 
       entities = Functions::find_entities(Sketchup.active_model.selection)
 
-      selected_count = 0
-      weight = 0
-      surface = 0
+      selected_count = entities.length
 
-      entities.each do |entity|
+      if selected_count == 0
+        @web_dialog.execute_script("
+            $('#selection').hide();
+            $('#no-selection').show();
+        ")
+        return
+      end
+
+      @web_dialog.execute_script("
+          $('#material-other').find('option,optgroup').remove();
+          $('#material-other').append('<option></option>');
+      ")
+
+      materials = []
+      materials.push(*Sketchup.active_model.get_attribute("Proce_SheetExporter", "used_materials", []))
+      materials.push("---")
+      materials.push(*@materials)
+
+      materials.each do |material|
+        @web_dialog.execute_script("
+           $('#material-other').append('<option>#{Functions::strip_quotes(material)}</option>');
+        ")
+      end
+
+      if selected_count == 1
+        entity = entities[0]
         sizes = Functions::entity_sizes(entity)
 
-        selected_count += 1
-
-        weight += sizes[0].to_mm * sizes[1].to_mm * sizes[2].to_mm / 1000000000 * 750
-        surface += sizes[0].to_mm * sizes[1].to_mm / 1000000
-
-
         @web_dialog.execute_script("
-            $('#material-other').find('option,optgroup').remove();
-            $('#material-other').append('<option></option>');
-        ")
+            $('#item-count').text('1');
 
-        materials = []
-        materials.push(*Sketchup.active_model.get_attribute("Proce_SheetExporter", "used_materials", []))
-        materials.push("---")
-        materials.push(*@materials)
-
-        materials.each do |material|
-          @web_dialog.execute_script("
-             $('#material-other').append('<option>#{Functions::strip_quotes(material)}</option>');
-          ")
-        end
-
-
-        @web_dialog.execute_script("
             $('#sub-assembly').text('#{Functions::entity_sub_assembly(entity)}');
             $('#description').text('#{Functions::entity_description(entity)}');
+
+            $('#weight').text('#{Functions::calc_weight(entity).round(0)}');
+            $('#surface').text('#{Functions::calc_surface(entity).round(1)}');
 
             $('#size-text .length-text').text('#{sizes[0]}');
             $('#size-text .width-text').text('#{sizes[1]}');
@@ -108,33 +113,42 @@ module Proce_SheetExporter
             $('#band-left').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "band-left", "false"))}');
 
             read_hidden_fields();
+
+            $('.single-item').show();
         ")
+      elsif selected_count > 1
+        weight = 0
+        surface = 0
 
-      end
+        entities.each do |entity|
+          weight += Functions::calc_weight(entity)
+          surface += Functions::calc_surface(entity)
+        end
 
-      @web_dialog.execute_script("
+        @web_dialog.execute_script("
             $('#item-count').text('#{selected_count}');
             $('#weight').text('#{weight.round(0)}');
             $('#surface').text('#{surface.round(1)}');
-      ")
 
-      if selected_count == 0
-        @web_dialog.execute_script("
-            $('#selection').hide();
-            $('#no-selection').show();
-        ")
-      else
-        @web_dialog.execute_script("
+            $('#skip').val('false');
+            $('#info').val('');
+            $('#rotate').val('false');
+            $('#material').val('');
+            $('#band-back').val('false)}');
+            $('#band-right').val('false');
+            $('#band-front').val('false');
+            $('#band-left').val('false');
+
+            read_hidden_fields();
+
+            $('.single-item').hide();
+      ")
+      end
+
+      @web_dialog.execute_script("
             $('#no-selection').hide();
             $('#selection').show();
         ")
-      end
-
-      if selected_count <= 1
-        @web_dialog.execute_script("$('.single-item').show();")
-      else
-        @web_dialog.execute_script("$('.single-item').hide();")
-      end
     end
 
 
