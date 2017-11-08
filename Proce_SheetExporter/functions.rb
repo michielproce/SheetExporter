@@ -9,8 +9,18 @@ module Proce_SheetExporter
 
 
     def self.entity_sizes(entity)
-      bounds = entity.bounds
-      [bounds.width, bounds.depth, bounds.height].sort.reverse
+      bounds = entity.definition.bounds
+
+      tr = entity.transformation.to_a
+      xscale = Math::sqrt(tr[0]*tr[0]+tr[1]*tr[1]+tr[2]*tr[2])
+      yscale = Math::sqrt(tr[8]*tr[8]+tr[9]*tr[9]+tr[10]*tr[10])
+      zscale = Math::sqrt(tr[4]*tr[4]+tr[5]*tr[5]+tr[6]*tr[6])
+
+      width = (bounds.width * xscale).to_l
+      depth = (bounds.depth * yscale).to_l
+      height = (bounds.height * zscale).to_l
+
+      [width, depth, height].sort.reverse
     end
 
     def self.entity_sub_assembly(entity)
