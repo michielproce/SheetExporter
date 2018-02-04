@@ -108,6 +108,7 @@ module Proce_SheetExporter
             $('#skip').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "skip", "false"))}');
             $('#rotate').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "rotate", "false"))}');
             $('#double').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "double", "false"))}');
+            $('#split').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "split", "1"))}');
             $('#band-back').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "band-back", "false"))}');
             $('#band-right').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "band-right", "false"))}');
             $('#band-front').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "band-front", "false"))}');
@@ -136,6 +137,7 @@ module Proce_SheetExporter
             $('#skip').val('false');
             $('#rotate').val('false');
             $('#double').val('false');
+            $('#split').val('1');
             $('#band-back').val('false)}');
             $('#band-right').val('false');
             $('#band-front').val('false');
@@ -239,16 +241,23 @@ module Proce_SheetExporter
             material_name = material
           end
 
+          # split first before rotate!
+          split = Integer(Functions::entity_get_attribute(entity, 'split', '1'))
+          if split != 1
+            copies *= split
+            sizes[0] = (sizes[0] / split).to_l
+            length = sizes[0]
+          end
+
           if Functions::entity_get_attribute(entity, 'rotate', 'false') == 'true'
             width = sizes[0]
             length = sizes[1]
           end
 
           if Functions::entity_get_attribute(entity, 'double', 'false') == 'true'
-            copies = 2
-            thick =  (thick / 2).to_l
+            copies *= 2
+            thick = (thick / 2).to_l
           end
-
 
           banding_material = '1'
           if (material == 'Primary')

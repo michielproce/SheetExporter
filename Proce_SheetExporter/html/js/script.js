@@ -33,8 +33,23 @@ $(document).ready( function() {
 
     $("#double-checkbox").on("change", function(evt) {
         $("#double").val($("#double-checkbox").is(":checked"));
-        update();
         window.location = 'skp:save_attribute@double';
+    });
+
+    $("#split").on("change keyup", function(evt) {
+        evt.preventDefault();
+        var splitVal = $("#split").val();
+        if (splitVal.trim() !== "") {
+            var split = parseInt(splitVal);
+            if (isNaN(split)) {
+                split = 1;
+            }
+
+            $("#split").val(split);
+        }
+
+
+        window.location = 'skp:save_attribute@split';
     });
 
 
