@@ -25,6 +25,9 @@ module Proce_SheetExporter
         puts web_dialog.get_element_value("error")
       }
 
+      @web_dialog.add_action_callback("save_description") { |web_dialog, params|
+        save_description
+      }
 
       @web_dialog.add_action_callback("save_attribute") { |web_dialog, params|
         save_attribute(params)
@@ -90,7 +93,7 @@ module Proce_SheetExporter
             $('#item-count').text('1');
 
             $('#sub-assembly').text('#{Functions::entity_sub_assembly(entity)}');
-            $('#description').text('#{Functions::entity_description(entity)}');
+
 
             $('#weight').text('#{Functions::calc_weight(entity).round(0)}');
             $('#surface').text('#{Functions::calc_surface(entity).round(1)}');
@@ -103,8 +106,9 @@ module Proce_SheetExporter
             $('#width').val('#{sizes[1].to_mm}');
             $('#thick').val('#{sizes[2].to_mm}');
 
-            $('#material').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "material", ""))}');
+            $('#description').val('#{Functions::entity_description(entity)}');
             $('#info').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "info", ""))}');
+            $('#material').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "material", ""))}');
             $('#skip').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "skip", "false"))}');
             $('#rotate').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "rotate", "false"))}');
             $('#double').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "double", "false"))}');
@@ -132,8 +136,9 @@ module Proce_SheetExporter
             $('#weight').text('#{weight.round(0)}');
             $('#surface').text('#{surface.round(1)}');
 
-            $('#material').val('');
+            $('#description').val('');
             $('#info').val('');
+            $('#material').val('');
             $('#skip').val('false');
             $('#rotate').val('false');
             $('#double').val('false');
@@ -156,6 +161,15 @@ module Proce_SheetExporter
     end
 
 
+    def save_description()
+      value = @web_dialog.get_element_value("description")
+      entities = Functions::find_entities(Sketchup.active_model.selection)
+      entities.each do |e|
+        e.definition.name = value
+      end
+    end
+
+
     def save_attribute(attribute)
       value = @web_dialog.get_element_value(attribute)
       # p "Saving attribute '#{attribute}' as '#{value}'"
@@ -169,36 +183,6 @@ module Proce_SheetExporter
       entities = Functions::find_entities(Sketchup.active_model.selection)
       entities.each do |e|
         Functions::entity_set_attribute(e, attribute, value)
-
-=begin
-        if attribute.start_with?("band-")
-          faces = e.definition.entities.select { |e| e.is_a? Sketchup::Face }.sort_by { |face| face.area }
-          if faces.length == 6
-
-            face_color = nil
-            if value == "true"
-              face_color = "Red"
-            end
-
-            if attribute == "band-back"
-              faces[2].material = face_color
-            end
-
-            if attribute == "band-right"
-              faces[0].material = face_color
-            end
-
-            if attribute == "band-front"
-              faces[3].material = face_color
-            end
-
-            if attribute == "band-left"
-              faces[1].material = face_color
-            end
-
-          end
-        end
-=end
       end
     end
 

@@ -3,6 +3,14 @@ $(document).ready( function() {
         window.location = 'skp:export_to_clipboard';
     });
 
+    $("#description").on("change keyup", function(evt) {
+        window.location = 'skp:save_description';
+    });
+
+    $("#info").on("change keyup", function(evt) {
+        window.location = 'skp:save_attribute@info';
+    });
+
     $("#material-wrapper input[type=radio]").on("change", function () {
         var material = $("#material-wrapper input[type=radio]:checked").val();
         if(material === "other") {
@@ -14,10 +22,6 @@ $(document).ready( function() {
 
     $("#material-other").on("change", function (evt) {
         $(this).siblings("label").find("input[type=radio]").prop("checked", true).trigger("change");
-    });
-
-    $("#info").on("change keyup", function(evt) {
-        window.location = 'skp:save_attribute@info';
     });
 
     $("#skip-checkbox").on("change", function(evt) {
