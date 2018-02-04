@@ -103,11 +103,11 @@ module Proce_SheetExporter
             $('#width').val('#{sizes[1].to_mm}');
             $('#thick').val('#{sizes[2].to_mm}');
 
-            $('#skip').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "skip", "false"))}');
+            $('#material').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "material", ""))}');
             $('#info').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "info", ""))}');
+            $('#skip').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "skip", "false"))}');
             $('#rotate').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "rotate", "false"))}');
             $('#double').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "double", "false"))}');
-            $('#material').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "material", ""))}');
             $('#band-back').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "band-back", "false"))}');
             $('#band-right').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "band-right", "false"))}');
             $('#band-front').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "band-front", "false"))}');
@@ -131,11 +131,11 @@ module Proce_SheetExporter
             $('#weight').text('#{weight.round(0)}');
             $('#surface').text('#{surface.round(1)}');
 
-            $('#skip').val('false');
+            $('#material').val('');
             $('#info').val('');
+            $('#skip').val('false');
             $('#rotate').val('false');
             $('#double').val('false');
-            $('#material').val('');
             $('#band-back').val('false)}');
             $('#band-right').val('false');
             $('#band-front').val('false');
@@ -227,16 +227,6 @@ module Proce_SheetExporter
           width = sizes[1]
           length = sizes[0]
 
-          if Functions::entity_get_attribute(entity, 'rotate', 'false') == 'true'
-            width = sizes[0]
-            length = sizes[1]
-          end
-
-          if Functions::entity_get_attribute(entity, 'double', 'false') == 'true'
-            copies = 2
-            thick =  (thick / 2).to_l
-          end
-
           material = Functions::entity_get_attribute(entity, "material", "")
           material_type = ''
           material_name = ''
@@ -248,6 +238,17 @@ module Proce_SheetExporter
             material_type = 'Sheet Good'
             material_name = material
           end
+
+          if Functions::entity_get_attribute(entity, 'rotate', 'false') == 'true'
+            width = sizes[0]
+            length = sizes[1]
+          end
+
+          if Functions::entity_get_attribute(entity, 'double', 'false') == 'true'
+            copies = 2
+            thick =  (thick / 2).to_l
+          end
+
 
           banding_material = '1'
           if (material == 'Primary')
