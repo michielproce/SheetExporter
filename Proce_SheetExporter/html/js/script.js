@@ -94,7 +94,7 @@ $(document).ready( function() {
 function read_hidden_fields() {
     $('#skip-checkbox').prop('checked', $("#skip").val() == 'true');
     $('#rotate-checkbox').prop('checked', $("#rotate").val() == 'true');
-    $('#rotate-double').prop('checked', $("#double").val() == 'true');
+    $('#double-checkbox').prop('checked', $("#double").val() == 'true');
 
     var material = $("#material").val();
     $("#material-other").val('');
