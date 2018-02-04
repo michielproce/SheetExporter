@@ -106,6 +106,7 @@ module Proce_SheetExporter
             $('#skip').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "skip", "false"))}');
             $('#info').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "info", ""))}');
             $('#rotate').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "rotate", "false"))}');
+            $('#double').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "double", "false"))}');
             $('#material').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "material", ""))}');
             $('#band-back').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "band-back", "false"))}');
             $('#band-right').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "band-right", "false"))}');
@@ -133,6 +134,7 @@ module Proce_SheetExporter
             $('#skip').val('false');
             $('#info').val('');
             $('#rotate').val('false');
+            $('#double').val('false');
             $('#material').val('');
             $('#band-back').val('false)}');
             $('#band-right').val('false');
@@ -219,6 +221,7 @@ module Proce_SheetExporter
         entities.each do |entity|
           next if Functions::entity_get_attribute(entity, 'skip', 'false') == 'true'
 
+          copies = 1
           sizes = Functions::entity_sizes(entity)
           thick = sizes[2]
           width = sizes[1]
@@ -227,6 +230,11 @@ module Proce_SheetExporter
           if Functions::entity_get_attribute(entity, 'rotate', 'false') == 'true'
             width = sizes[0]
             length = sizes[1]
+          end
+
+          if Functions::entity_get_attribute(entity, 'double', 'false') == 'true'
+            copies = 2
+            thick =  (thick / 2).to_l
           end
 
           material = Functions::entity_get_attribute(entity, "material", "")
@@ -260,10 +268,10 @@ module Proce_SheetExporter
           csv << [
               Functions::entity_sub_assembly(entity),
               Functions::entity_description(entity),
-              1, # Cutlist Plus merges items
-              thick,
-              width,
-              length,
+              copies, # Only used for double, Cutlist Plus merges items
+              thick.to_mm,
+              width.to_mm,
+              length.to_mm,
               material_type,
               material_name,
               banding,

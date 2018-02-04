@@ -18,6 +18,12 @@ $(document).ready( function() {
         window.location = 'skp:save_attribute@rotate';
     });
 
+    $("#double-checkbox").on("change", function(evt) {
+        $("#double").val($("#double-checkbox").is(":checked"));
+        update();
+        window.location = 'skp:save_attribute@double';
+    });
+
     $("#material-wrapper input[type=radio]").on("change", function () {
         var material = $("#material-wrapper input[type=radio]:checked").val();
         if(material === "other") {
@@ -73,6 +79,7 @@ $(document).ready( function() {
 function read_hidden_fields() {
     $('#skip-checkbox').prop('checked', $("#skip").val() == 'true');
     $('#rotate-checkbox').prop('checked', $("#rotate").val() == 'true');
+    $('#rotate-double').prop('checked', $("#double").val() == 'true');
 
     var material = $("#material").val();
     $("#material-other").val('');
