@@ -3,13 +3,26 @@ $(document).ready( function() {
         window.location = 'skp:export_to_clipboard';
     });
 
-    $("#skip-checkbox").on("change", function(evt) {
-        $("#skip").val($("#skip-checkbox").is(":checked"));
-        window.location = 'skp:save_attribute@skip';
+    $("#material-wrapper input[type=radio]").on("change", function () {
+        var material = $("#material-wrapper input[type=radio]:checked").val();
+        if(material === "other") {
+            material = $("#material-other").val();
+        }
+        $("#material").val(material);
+        window.location = 'skp:save_attribute@material';
+    });
+
+    $("#material-other").on("change", function (evt) {
+        $(this).siblings("label").find("input[type=radio]").prop("checked", true).trigger("change");
     });
 
     $("#info").on("change keyup", function(evt) {
         window.location = 'skp:save_attribute@info';
+    });
+
+    $("#skip-checkbox").on("change", function(evt) {
+        $("#skip").val($("#skip-checkbox").is(":checked"));
+        window.location = 'skp:save_attribute@skip';
     });
 
     $("#rotate-checkbox").on("change", function(evt) {
@@ -24,19 +37,6 @@ $(document).ready( function() {
         window.location = 'skp:save_attribute@double';
     });
 
-    $("#material-wrapper input[type=radio]").on("change", function () {
-        var material = $("#material-wrapper input[type=radio]:checked").val();
-        if(material === "other") {
-            material = $("#material-other").val();
-        }
-        $("#material").val(material);
-        window.location = 'skp:save_attribute@material';
-    });
-
-
-    $("#material-other").on("change", function (evt) {
-        $(this).siblings("label").find("input[type=radio]").prop("checked", true).trigger("change");
-    });
 
     $("#sheet").on("click", function (evt) {
         var newState = false;
