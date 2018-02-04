@@ -30,6 +30,10 @@ module Proce_SheetExporter
     def self.entity_description(entity)
       description = ""
 
+      if entity.is_a? Sketchup::Group
+        description = entity.name
+      end
+
       if entity.is_a? Sketchup::ComponentInstance
         description = entity.definition.name
       end
