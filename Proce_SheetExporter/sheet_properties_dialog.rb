@@ -263,9 +263,9 @@ module Proce_SheetExporter
               Functions::entity_sub_assembly(entity),
               Functions::entity_description(entity),
               copies, # Only used for double, Cutlist Plus merges items
-              thick.to_mm,
-              width.to_mm,
-              length.to_mm,
+              thick.to_mm.round(1),
+              width.to_mm.round(1),
+              length.to_mm.round(1),
               material_type,
               material_name,
               banding,
