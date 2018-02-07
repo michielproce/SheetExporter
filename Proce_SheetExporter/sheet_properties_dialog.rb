@@ -212,6 +212,8 @@ module Proce_SheetExporter
           thick = sizes[2]
           width = sizes[1]
           length = sizes[0]
+          info  = Functions::entity_get_attribute(entity, "info", "")
+
 
           material = Functions::entity_get_attribute(entity, "material", "")
           material_type = ''
@@ -231,6 +233,7 @@ module Proce_SheetExporter
             copies *= split
             sizes[0] = (sizes[0] / split).to_l
             length = sizes[0]
+            info = "#{info} (split/#{split})"
           end
 
           if Functions::entity_get_attribute(entity, 'rotate', 'false') == 'true'
@@ -241,6 +244,7 @@ module Proce_SheetExporter
           if Functions::entity_get_attribute(entity, 'double', 'false') == 'true'
             copies *= 2
             thick = (thick / 2).to_l
+            info = "#{info} (double)"
           end
 
           banding_material = '1'
@@ -269,7 +273,7 @@ module Proce_SheetExporter
               material_type,
               material_name,
               banding,
-              Functions::entity_get_attribute(entity, "info", "")
+              info
           ]
 
         end
