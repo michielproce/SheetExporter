@@ -1,6 +1,6 @@
 require 'csv'
 
-module Proce_SheetExporter
+module SheetExporter
   
   class SheetPropertiesDialog
 
@@ -8,14 +8,14 @@ module Proce_SheetExporter
     def initialize()
       @web_dialog = UI::WebDialog.new({
           :dialog_title => "Sheet properties",
-          :preferences_key => 'Proce_SheetExporter',
+          :preferences_key => 'SheetExporter',
           :height => 800,
           :width => 350,
           :resizable => true,
           :scrollable => false
       })
 
-      @web_dialog.set_file(Sketchup.find_support_file "sheet_properties_dialog.html", "Plugins/Proce_SheetExporter/html")
+      @web_dialog.set_file(Sketchup.find_support_file "sheet_properties_dialog.html", "Plugins/SheetExporter/html")
 
       @web_dialog.add_action_callback("document_ready") { |web_dialog|
         update
@@ -71,7 +71,7 @@ module Proce_SheetExporter
       ")
 
       materials = []
-      materials.push(*Sketchup.active_model.get_attribute("Proce_SheetExporter", "used_materials", []))
+      materials.push(*Sketchup.active_model.get_attribute("SheetExporter", "used_materials", []))
       materials.push("---")
       materials.push(*@materials)
 
@@ -162,9 +162,9 @@ module Proce_SheetExporter
       # p "Saving attribute '#{attribute}' as '#{value}'"
 
       if (attribute == "material" && value != '' && value != 'Primary' && value != 'Secondary')
-        used_materials = Sketchup.active_model.get_attribute("Proce_SheetExporter", "used_materials", [])
+        used_materials = Sketchup.active_model.get_attribute("SheetExporter", "used_materials", [])
         used_materials.push(value)
-        Sketchup.active_model.set_attribute("Proce_SheetExporter", "used_materials", used_materials.uniq.sort)
+        Sketchup.active_model.set_attribute("SheetExporter", "used_materials", used_materials.uniq.sort)
       end
 
       entities = Functions::find_entities(Sketchup.active_model.selection)

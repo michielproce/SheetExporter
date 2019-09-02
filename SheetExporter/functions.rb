@@ -1,6 +1,6 @@
 require 'ostruct'
 
-module Proce_SheetExporter
+module SheetExporter
   class Functions
 
     def self.strip_quotes(input)
@@ -42,11 +42,11 @@ module Proce_SheetExporter
     end
 
     def self.entity_get_attribute(entity, name, default = nil)
-      entity.definition.get_attribute("Proce_SheetExporter", name, default)
+      entity.definition.get_attribute("SheetExporter", name, default)
     end
 
     def self.entity_set_attribute(entity, name, value)
-      entity.definition.set_attribute("Proce_SheetExporter", name, value)
+      entity.definition.set_attribute("SheetExporter", name, value)
     end
 
     def self.find_entities(selection)
@@ -131,7 +131,7 @@ module Proce_SheetExporter
     def self.import_materials
       materials = []
 
-      CSV.foreach(Sketchup.find_support_file "materials.csv", "Plugins/Proce_SheetExporter/materials") do |row|
+      CSV.foreach(Sketchup.find_support_file "materials.csv", "Plugins/SheetExporter/materials") do |row|
         next unless row[0] == "Sheet Good"
         materials.push row[1]
       end
