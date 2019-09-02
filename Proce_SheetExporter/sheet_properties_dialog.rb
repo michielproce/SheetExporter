@@ -25,10 +25,6 @@ module Proce_SheetExporter
         puts web_dialog.get_element_value("error")
       }
 
-      @web_dialog.add_action_callback("save_description") { |web_dialog, params|
-        save_description
-      }
-
       @web_dialog.add_action_callback("save_attribute") { |web_dialog, params|
         save_attribute(params)
       }
@@ -93,7 +89,7 @@ module Proce_SheetExporter
             $('#item-count').text('1');
 
             $('#sub-assembly').text('#{Functions::entity_sub_assembly(entity)}');
-
+            $('#description').text('#{Functions::entity_description(entity)}');
 
             $('#weight').text('#{Functions::calc_weight(entity).round(0)}');
             $('#surface').text('#{Functions::calc_surface(entity).round(1)}');
@@ -106,7 +102,6 @@ module Proce_SheetExporter
             $('#width').val('#{sizes[1].to_mm}');
             $('#thick').val('#{sizes[2].to_mm}');
 
-            $('#description').val('#{Functions::entity_description(entity)}');
             $('#info').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "info", ""))}');
             $('#material').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "material", ""))}');
             $('#skip').val('#{Functions::strip_quotes(Functions::entity_get_attribute(entity, "skip", "false"))}');
@@ -136,7 +131,6 @@ module Proce_SheetExporter
             $('#weight').text('#{weight.round(0)}');
             $('#surface').text('#{surface.round(1)}');
 
-            $('#description').val('');
             $('#info').val('');
             $('#material').val('');
             $('#skip').val('false');
@@ -161,13 +155,6 @@ module Proce_SheetExporter
     end
 
 
-    def save_description()
-      value = @web_dialog.get_element_value("description")
-      entities = Functions::find_entities(Sketchup.active_model.selection)
-      entities.each do |e|
-        e.definition.name = value
-      end
-    end
 
 
     def save_attribute(attribute)

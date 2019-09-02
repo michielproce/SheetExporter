@@ -3,10 +3,6 @@ $(document).ready( function() {
         window.location = 'skp:export_to_clipboard';
     });
 
-    $("#description").on("change keyup", function(evt) {
-        window.location = 'skp:save_description';
-    });
-
     $("#info").on("change keyup", function(evt) {
         window.location = 'skp:save_attribute@info';
     });
